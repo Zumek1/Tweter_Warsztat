@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.Repositories.UserRepo;
+import pl.coderslab.model.Tweet;
 import pl.coderslab.model.User;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Controller
 @Transactional
@@ -27,11 +29,18 @@ public class UserController {
     }
 
     @PostMapping("/tweeter")
-    public String zaloguj(@ModelAttribute User user){
+    public String zaloguj(@ModelAttribute User user, Model model){
         userRepo.save(user);
+        model.addAttribute("user", user);
         return "userPage";
 
     }
+
+//    @ModelAttribute("tweets")
+//    public List<Tweet> getAllTweets() {
+//
+//        return userRepo.fin;
+//    }
 
 //    @GetMapping("/add")
 //    public String addUser(Model model){
