@@ -1,38 +1,44 @@
-package pl.coderslab.model;
+package pl.coderslab.user;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy =
-            GenerationType.IDENTITY)
-    private long id;
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
     private String firstName;
-    @NotNull
+
+    @NotBlank
     private String lastName;
+
     @NotBlank
     private String password;
-    @NotBlank
-    @Email
-    private String email;
-    @OneToMany(mappedBy = "user")
-    private List<Tweet> tweets = new ArrayList<>();
 
-    public long getId() {
+    @Email
+    @NotBlank
+    private String email;
+
+    public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,12 +74,4 @@ public class User {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

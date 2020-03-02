@@ -1,10 +1,10 @@
-package pl.coderslab.model;
+package pl.coderslab.message;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Table(name = "messages")

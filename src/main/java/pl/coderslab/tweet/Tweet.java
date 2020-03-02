@@ -1,31 +1,41 @@
-package pl.coderslab.model;
+package pl.coderslab.tweet;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tweet")
+@Table(name = "tweets")
 public class Tweet {
-
     @Id
-    @GeneratedValue(strategy =
-            GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     private User user;
+
     @NotBlank
     @Size(max = 140)
     private String text;
+
     private LocalDateTime created;
 
-    public long getId() {
+    @PrePersist
+    public void prePersist() {
+        created = LocalDateTime.now();
+    }
+
+    public Tweet() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,15 +63,11 @@ public class Tweet {
         this.created = created;
     }
 
-    @PrePersist
-    public void prePersist() {
-        created = LocalDateTime.now();
-    }
-
     @Override
     public String toString() {
         return "Tweet{" +
                 "id=" + id +
+                ", user=" + user +
                 ", text='" + text + '\'' +
                 ", created=" + created +
                 '}';
